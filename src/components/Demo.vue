@@ -30,7 +30,8 @@
             </el-col>
             <!-- 右侧 -->
             <el-col :span="20" class="only-height">
-                <div>tab内容</div>
+                <router-link to="/qry">Go to Qry</router-link>
+                <router-view></router-view>
             </el-col>
         </el-row>
     </div>
