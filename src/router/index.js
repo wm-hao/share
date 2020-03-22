@@ -1,17 +1,29 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Demo from '@/components/Demo'
+import Home from '@/components/Home'
 import Qry from '@/components/TradeRecordQry'
 import Save from '@/components/TradeRecordSave'
+import System from '@/components/SystemManage'
 
 Vue.use(Router)
 
 export default new Router({
+  // mode: "history",
   routes: [
     {
       path: '/',
-      name: 'Demo',
-      component: Demo,
+      name: 'Home',
+      component: Home,
+      children: [
+        {
+          path: 'system',
+          component: System
+        }
+      ]
+    },
+    {
+      path: '/rec',
+      component: Home,
       children: [
         {
           path: 'qry',
@@ -22,10 +34,7 @@ export default new Router({
           component: Save
         }
       ]
-    }, {
-      path: '/qry',
-      name: 'Qry',
-      component: Qry,
     }
+
   ]
 })
