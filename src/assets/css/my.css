@@ -1,0 +1,36 @@
+.both {
+    height: 100%;
+    width: 100%;
+}
+
+.height {
+    height: 100%;
+}
+
+.width {
+    width: 100%;
+}
+
+#app {
+    height: 600px;
+    width: 100%;
+}
+
+.center {
+    /* width: 200px;
+        height: 100px;
+        position:absolute;
+        left:50%;
+        top:50%;
+        margin-top: -50px;
+        margin-left:-100px; */
+    /* margin: 0 auto; */
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
