@@ -1,44 +1,57 @@
 <template>
-    <div>
-        <el-container class="both">
-            <el-header>
-                <h1>头部</h1>
-            </el-header>
-            <el-container>
-                <el-aside>
-                    <el-menu :default-active="this.$route.path" router class="height">
-                        <el-submenu index="1">
-                            <template slot="title">
-                                <i class="el-icon-menu"></i>
-                                <span>交易管理</span>
-                            </template>
-                            <el-menu-item index="/rec/manage/qry">记录查询</el-menu-item>
-                        </el-submenu>
-                    </el-menu>
-                </el-aside>
-                <el-main>
-                    <router-view></router-view>
-                </el-main>
-            </el-container>
-        </el-container>
-    </div>
+  <div class="bigSize">
+    <el-container class="both">
+      <el-header>
+        <el-row>
+          <el-col :span="4"><h1>头部</h1></el-col>
+          <el-col :span="16"></el-col>
+          <el-col :span="4">
+            <el-button @click="logout">登出</el-button>
+          </el-col>
+        </el-row>
+      </el-header>
+      <el-container>
+        <el-aside>
+          <el-menu :default-active="this.$route.path" router>
+            <el-submenu index="1">
+              <template slot="title">
+                <i class="el-icon-menu"></i>
+                <span>交易管理</span>
+              </template>
+              <el-menu-item index="/rec/manage/qry">记录查询</el-menu-item>
+            </el-submenu>
+          </el-menu>
+        </el-aside>
+        <el-main>
+          <div>
+            <router-view></router-view>
+          </div>
+        </el-main>
+      </el-container>
+    </el-container>
+  </div>
 </template>
 
 <script>
-export default {
-    name: "Home"
-};
+    import {store_f_changeLogin} from "../const";
+
+    export default {
+        name: "Home",
+        methods: {
+            logout: function () {
+                console.log('登出');
+
+                this.$store.commit(store_f_changeLogin, {
+                    authToken: ''
+                });
+            }
+        }
+    };
 </script>
 
 <style scoped>
-.height {
-    height: 100%;
-}
-.width {
-    width: 100%;
-}
-.both {
-    height: 100%;
-    width: 100%;
-}
+  .el-col {
+    min-height: 1px
+  }
+
 </style>

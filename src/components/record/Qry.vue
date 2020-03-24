@@ -1,14 +1,7 @@
 <template>
-    <div class="both">
+    <div>
         <el-table :data="tableData" max-height="500" style="width: 100%">
-            <el-table-column prop="name" label="名称"></el-table-column>
-            <el-table-column prop="code" label="编码"></el-table-column>
-            <el-table-column prop="name" label="名称"></el-table-column>
-            <el-table-column prop="code" label="编码"></el-table-column>
-            <el-table-column prop="name" label="名称"></el-table-column>
-            <el-table-column prop="code" label="编码"></el-table-column>
-            <el-table-column prop="name" label="名称"></el-table-column>
-            <el-table-column prop="code" label="编码"></el-table-column>
+            <el-table-column v-for="col in cols" :key="col.id" :prop="col.prop" :label="col.label"></el-table-column>
         </el-table>
     </div>
 </template>
@@ -18,7 +11,8 @@ import { serverUrl, shareList } from "@/const";
 export default {
     data() {
         return {
-            tableData: []
+            tableData: [],
+            cols: []
         };
     },
     methods: {
@@ -33,6 +27,11 @@ export default {
     },
     created: function() {
         let self = this;
+        this.cols.push({
+            id: 1,
+            prop: "name",
+            label: "名称"
+        });
         this.$axios
             .get(serverUrl + shareList)
             .then(function(response) {
