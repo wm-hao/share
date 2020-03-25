@@ -9,10 +9,9 @@ const store = new Vuex.Store({
     token: localStorage.getItem(store_s_token_key) ? localStorage.getItem(store_s_token_key) : ''
   },
   mutations: {
-    [store_f_changeLogin](state, user) {
-      let token = user.authToken;
-      state.token = token;
-      localStorage.setItem(store_s_token_key, token);
+    [store_f_changeLogin](state, authToken) {
+      state.token = authToken;
+      localStorage.setItem(store_s_token_key, authToken);
     }
   }
 });

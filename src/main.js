@@ -5,15 +5,17 @@ import App from './App'
 import router from './router'
 import store from "./store/store"
 import ElementUI from 'element-ui'
-import axios from 'axios'
-import VueAxios from 'vue-axios'
+// import axios from 'axios'
+// import VueAxios from 'vue-axios'
+import service from "./http";
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/my.css'
 
 
-Vue.use(VueAxios, axios)
 Vue.use(ElementUI)
-Vue.prototype.$axios = axios
+Vue.use(service)
+
+Vue.prototype.$http = service
 Vue.config.productionTip = false
 
 new Vue({

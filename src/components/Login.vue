@@ -125,9 +125,7 @@
                 this.$refs[formName].validate(valid => {
                     if (valid) {
                         console.log("提交");
-                        this.$store.commit(store_f_changeLogin, {
-                            authToken: 'abc'
-                        });
+                        this.$store.commit(store_f_changeLogin, 'my1026token');
                         this.$router.push({path: "/home"});
                     } else {
                         console.log("error submit!!");

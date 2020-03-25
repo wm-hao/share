@@ -18,7 +18,7 @@
                 <i class="el-icon-menu"></i>
                 <span>交易管理</span>
               </template>
-              <el-menu-item index="/rec/manage/qry">记录查询</el-menu-item>
+              <el-menu-item index="/rec/qry">记录查询</el-menu-item>
             </el-submenu>
           </el-menu>
         </el-aside>
@@ -40,10 +40,7 @@
         methods: {
             logout: function () {
                 console.log('登出');
-
-                this.$store.commit(store_f_changeLogin, {
-                    authToken: ''
-                });
+                this.$store.commit(store_f_changeLogin, null);
             }
         }
     };

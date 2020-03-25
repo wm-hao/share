@@ -23,12 +23,15 @@ const router = new Router({
       path: '/home',
       name: 'home',
       component: Home,
+      children: [
+        {
+          path: '/rec/qry',
+          name: 'qry',
+          component: Qry
+        }
+      ]
     },
-    {
-      path: '/rec/manage/qry',
-      name: 'recManageQry',
-      component: Qry
-    }
+
   ]
 });
 
