@@ -30,13 +30,12 @@ const router = new Router({
           component: Qry
         }
       ]
-    },
+    }
 
   ]
 });
 
 router.beforeEach((to, from, next) => {
-  console.log(to.path);
   if (to.path === '/login') {
     next();
   } else {

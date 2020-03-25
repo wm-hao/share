@@ -54,8 +54,16 @@
 
 
 <script>
-    import {mapState} from 'vuex'
-    import {store_f_changeLogin} from "../const";
+    import {
+        rememberPass,
+        store_f_changeLogin,
+        strTrue,
+        successCode,
+        userExists,
+        userInfo,
+        userValidate
+    } from "../const";
+    import util from "../util";
 
     export default {
         data() {
@@ -63,40 +71,26 @@
                 if (value === "") {
                     callback(new Error("请输入用户名"));
                 } else {
+                    /*setTimeout(() => {
+                        this.$http.get(userExists, {
+                            params: {
+                                userName: value
+                            }
+                        }).then(function (resp) {
+                            if (resp.data.code == successCode) {
+                            } else {
+                                callback(new Error("用户名已存在"));
+                            }
+                        }).catch(function (err) {
+                            callback(new Error("用户名是否存在服务失败"));
+                        });
+                    }, 1000);*/
                     callback();
                 }
-            };
-            var checkAge = (rule, value, callback) => {
-                if (!value) {
-                    return callback(new Error("年龄不能为空"));
-                }
-                setTimeout(() => {
-                    if (!Number.isInteger(value)) {
-                        callback(new Error("请输入数字值"));
-                    } else {
-                        if (value < 18) {
-                            callback(new Error("必须年满18岁"));
-                        } else {
-                            callback();
-                        }
-                    }
-                }, 1000);
             };
             var validatePass = (rule, value, callback) => {
                 if (value === "") {
                     callback(new Error("请输入密码"));
-                } else {
-                    if (this.userForm.checkPass !== "") {
-                        this.$refs.userForm.validateField("checkPass");
-                    }
-                    callback();
-                }
-            };
-            var validatePass2 = (rule, value, callback) => {
-                if (value === "") {
-                    callback(new Error("请再次输入密码"));
-                } else if (value !== this.userForm.pass) {
-                    callback(new Error("两次输入密码不一致!"));
                 } else {
                     callback();
                 }
@@ -106,35 +100,84 @@
                 userForm: {
                     userName: "",
                     pass: "",
-                    checkPass: "",
-                    age: ""
                 },
                 rules: {
                     userName: [{validator: validateUserName, trigger: "blur"}],
                     pass: [{validator: validatePass, trigger: "blur"}],
-                    checkPass: [{validator: validatePass2, trigger: "blur"}],
-                    age: [{validator: checkAge, trigger: "blur"}]
                 }
             };
         },
-        computed: mapState({
-            msg: state => state.token,
-        }),
         methods: {
             submitForm(formName) {
                 this.$refs[formName].validate(valid => {
                     if (valid) {
-                        console.log("提交");
-                        this.$store.commit(store_f_changeLogin, 'my1026token');
-                        this.$router.push({path: "/home"});
+                        let self = this;
+                        let newPass = util.encrypt(this.userForm.pass).toString();
+                        console.log("newPass:" + newPass);
+                        this.$http.post(userValidate, {
+                            userName: self.userForm.userName,
+                            password: newPass
+                        }).then(function (resp) {
+                            if (resp.data.code == successCode) {
+                                self.$store.commit(store_f_changeLogin, resp.data.result);
+                                if (self.checked) {
+                                    self.$cookies.set(rememberPass, strTrue, '1d');
+                                    self.$cookies.set(userInfo, self.userForm.userName);
+                                    self.$cookies.set(self.userForm.userName, newPass);
+                                } else {
+                                    self.$cookies.remove(rememberPass);
+                                    self.$cookies.remove(userInfo);
+                                    self.$cookies.remove(self.userForm.userName);
+                                }
+                                self.$router.push({path: "/home"});
+                            } else {
+                                self.$notify.error({
+                                    title: '错误',
+                                    message: '用户登录验证失败'
+                                });
+                            }
+                        }).catch(function (err) {
+                            self.$notify.error({
+                                title: '错误',
+                                message: err.message
+                            });
+                        });
                     } else {
-                        console.log("error submit!!");
+                        this.$notify.error({
+                            title: '错误',
+                            message: '输入信息有误'
+                        });
                         return false;
                     }
                 });
             },
             resetForm(formName) {
                 this.$refs[formName].resetFields();
+            },
+            existsUserName(userName) {
+                this.$http.get(userExists, {
+                    params: {
+                        userName: userName
+                    }
+                }).then(function (resp) {
+                    if (resp.data.code == successCode) {
+                        return true;
+                    }
+                }).catch(function (err) {
+
+                });
+                return false;
+            }
+        },
+        created() {
+            console.log("密码;" + util.encrypt("p1"));
+            console.log("密码;" + util.encrypt("p1"));
+            console.log("密码;" + util.encrypt("p1"));
+            let rp = this.$cookies.get(rememberPass);
+            if (rp === strTrue) {
+                let userName = this.$cookies.get(userInfo);
+                this.userForm.userName = userName;
+                this.userForm.pass = this.$cookies.get(userName);
             }
         }
     };

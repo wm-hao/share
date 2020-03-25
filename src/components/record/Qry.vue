@@ -34,7 +34,7 @@
                 label: "名称"
             });
             this.$http
-                .get(serverUrl + shareList)
+                .get(shareList)
                 .then(function (response) {
                     console.log(response);
                     self.setTableData(response);
@@ -42,13 +42,13 @@
                 .catch(function (error) {
                     console.log(error);
                 });
-            // this.$http.get(err405)
-            //     .then(function (response) {
-            //         console.log(response);
-            //     })
-            //     .catch(function (error) {
-            //         console.log(error);
-            //     });
+            this.$http.get(err405)
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
     };
 </script>

@@ -5,17 +5,14 @@ import App from './App'
 import router from './router'
 import store from "./store/store"
 import ElementUI from 'element-ui'
-// import axios from 'axios'
-// import VueAxios from 'vue-axios'
-import service from "./http";
+import http from "./http";
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/my.css'
+import VueCookies from 'vue-cookies'
 
-
+Vue.use(VueCookies)
 Vue.use(ElementUI)
-Vue.use(service)
-
-Vue.prototype.$http = service
+Vue.prototype.$http = http
 Vue.config.productionTip = false
 
 new Vue({

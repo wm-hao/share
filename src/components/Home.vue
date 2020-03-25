@@ -39,7 +39,6 @@
         name: "Home",
         methods: {
             logout: function () {
-                console.log('登出');
                 this.$store.commit(store_f_changeLogin, null);
             }
         }

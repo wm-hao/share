@@ -5,11 +5,11 @@ import {serverUrl} from "./const";
 import {store_s_token_key, store_f_changeLogin} from "./const";
 import Message from "element-ui/packages/message/src/main";
 
-const service = axios.create({
-  // baseURL: serverUrl, // api 的 base_url
+const http = axios.create({
+  baseURL: serverUrl, // api 的 base_url
   timeout: 5000, // request timeout  设置请求超时时间
   responseType: "json",
-  withCredentials: true, // 是否允许带cookie这些
+  // withCredentials: true, // 是否允许带cookie这些
   headers: {
     "Content-Type": "application/json;charset=utf-8"
   }
@@ -17,11 +17,8 @@ const service = axios.create({
 
 
 // 添加请求拦截器，在请求头中加token
-service.interceptors.request.use(
+http.interceptors.request.use(
   config => {
-    console.log(config);
-    let url = router.path;
-    console.log(url);
     if (localStorage.getItem(store_s_token_key)) {
       config.headers.token = localStorage.getItem(store_s_token_key);
     }
@@ -32,7 +29,7 @@ service.interceptors.request.use(
   });
 
 // 响应拦截器
-/*service.interceptors.response.use(
+http.interceptors.response.use(
   response => {
     // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据
     // 否则的话抛出错误
@@ -69,7 +66,7 @@ service.interceptors.request.use(
           case 403:
             Message({
               message: '登录过期，请重新登录',
-              duration: 1000,
+              duration: 3000,
               forbidClick: true
             });
             // 清除token
@@ -90,7 +87,7 @@ service.interceptors.request.use(
           case 404:
             Message({
               message: '网络请求不存在',
-              duration: 1500,
+              duration: 3000,
               forbidClick: true
             });
             break;
@@ -98,7 +95,7 @@ service.interceptors.request.use(
           default:
             Message({
               message: error.response.data.message,
-              duration: 1500,
+              duration: 3000,
               forbidClick: true
             });
         }
@@ -107,11 +104,11 @@ service.interceptors.request.use(
     } else {
       Message({
         message: error.message,
-        duration: 1500,
+        duration: 3000,
         forbidClick: true
       });
     }
 
-  });*/
+  });
 
-export default service;
+export default http;
