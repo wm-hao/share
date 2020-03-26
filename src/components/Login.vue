@@ -71,19 +71,25 @@
                 if (value === "") {
                     callback(new Error("请输入用户名"));
                 } else {
-                    /*setTimeout(() => {
-                        this.$http.get(userExists, {
-                            params: {
-                                userName: value
-                            }
-                        }).then(function (resp) {
-                            if (resp.data.code == successCode) {
-                            } else {
-                                callback(new Error("用户名已存在"));
-                            }
-                        }).catch(function (err) {
-                            callback(new Error("用户名是否存在服务失败"));
-                        });
+                    /*let errMsg = "用户名已存在";
+                    let success = false;
+                    this.$http.get(userExists, {
+                        params: {
+                            userName: value
+                        }
+                    }).then(function (resp) {
+                        if (resp.data.code == successCode) {
+                            success = true;
+                        }
+                    }).catch(function (err) {
+                        errMsg = "用户名是否存在服务失败";
+                    });
+                    setTimeout(() => {
+                        if (success) {
+                            callback();
+                        } else {
+                            callback(new Error(errMsg));
+                        }
                     }, 1000);*/
                     callback();
                 }
@@ -112,13 +118,16 @@
                 this.$refs[formName].validate(valid => {
                     if (valid) {
                         let self = this;
-                        let newPass = util.encrypt(this.userForm.pass).toString();
-                        console.log("newPass:" + newPass);
+                        let newPass = util.MD5(this.userForm.pass).toString();
+                        let remember = this.$cookies.get(rememberPass);
+                        if (remember === strTrue) {
+                            newPass = this.userForm.pass;
+                        }
                         this.$http.post(userValidate, {
                             userName: self.userForm.userName,
                             password: newPass
                         }).then(function (resp) {
-                            if (resp.data.code == successCode) {
+                            if (resp.data.code === successCode) {
                                 self.$store.commit(store_f_changeLogin, resp.data.result);
                                 if (self.checked) {
                                     self.$cookies.set(rememberPass, strTrue, '1d');
@@ -133,7 +142,8 @@
                             } else {
                                 self.$notify.error({
                                     title: '错误',
-                                    message: '用户登录验证失败'
+                                    message: '用户登录验证失败',
+                                    duration: 1500
                                 });
                             }
                         }).catch(function (err) {
@@ -160,7 +170,7 @@
                         userName: userName
                     }
                 }).then(function (resp) {
-                    if (resp.data.code == successCode) {
+                    if (resp.data.code === successCode) {
                         return true;
                     }
                 }).catch(function (err) {
@@ -170,14 +180,12 @@
             }
         },
         created() {
-            console.log("密码;" + util.encrypt("p1"));
-            console.log("密码;" + util.encrypt("p1"));
-            console.log("密码;" + util.encrypt("p1"));
             let rp = this.$cookies.get(rememberPass);
             if (rp === strTrue) {
                 let userName = this.$cookies.get(userInfo);
                 this.userForm.userName = userName;
                 this.userForm.pass = this.$cookies.get(userName);
+                this.checked = true;
             }
         }
     };

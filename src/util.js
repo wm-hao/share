@@ -13,6 +13,9 @@ let util = {
     let originalText = bytes.toString(CryptoJS.enc.Utf8);
     return originalText;
   },
+  MD5: function (originalText) {
+    return CryptoJS.MD5(originalText);
+  },
   // 设置cookie
   setCookie(cname, cvalue, exdays) {
     let date = new Date();

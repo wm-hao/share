@@ -21,6 +21,7 @@ http.interceptors.request.use(
   config => {
     if (localStorage.getItem(store_s_token_key)) {
       config.headers.token = localStorage.getItem(store_s_token_key);
+      config.headers.Access-Control-Allow-Origin = '*';
     }
     return config;
   },
