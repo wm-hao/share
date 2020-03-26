@@ -1,9 +1,9 @@
 import axios from 'axios'
 import store from './store/store'
 import router from "./router";
-import {serverUrl} from "./const";
-import {store_s_token_key, store_f_changeLogin} from "./const";
+import {serverUrl, store_f_changeLogin, store_s_token_key} from "./const";
 import Message from "element-ui/packages/message/src/main";
+import qs from 'qs'
 
 const http = axios.create({
   baseURL: serverUrl, // api 的 base_url
@@ -18,12 +18,11 @@ const http = axios.create({
 
 // 添加请求拦截器，在请求头中加token
 http.interceptors.request.use(
-  config => {
+  req => {
     if (localStorage.getItem(store_s_token_key)) {
-      config.headers.token = localStorage.getItem(store_s_token_key);
-      config.headers.Access-Control-Allow-Origin = '*';
+      req.headers.token = localStorage.getItem(store_s_token_key);
     }
-    return config;
+    return req;
   },
   error => {
     return Promise.reject(error);
@@ -110,6 +109,7 @@ http.interceptors.response.use(
       });
     }
 
-  });
+  }
+);
 
 export default http;

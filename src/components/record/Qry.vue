@@ -35,10 +35,8 @@
                     this.tableData.push(item);
                 }
             },
-            li2yuan(li) {
-                let yuan = (parseInt(li) / 1000).toString();
-                console.log(yuan);
-                return yuan;
+            li2yuan(row, col, cell) {
+                return cell/1000;
             }
         },
         created: function () {
