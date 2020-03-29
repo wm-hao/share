@@ -7,7 +7,7 @@ import qs from 'qs'
 
 const http = axios.create({
   baseURL: serverUrl, // api 的 base_url
-  timeout: 5000, // request timeout  设置请求超时时间
+  timeout: 10000, // request timeout  设置请求超时时间
   responseType: "json",
   // withCredentials: true, // 是否允许带cookie这些
   headers: {
@@ -103,10 +103,12 @@ http.interceptors.response.use(
       }
     } else {
       Message({
-        message: error.message,
+        message: '后台服务发生错误',
         duration: 3000,
+        center: true,
         forbidClick: true
       });
+      return Promise.reject(error);
     }
 
   }

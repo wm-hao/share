@@ -4,6 +4,11 @@ import Qry from '@/components/record/Qry'
 import Home from '@/components/Home'
 import Login from '@/components/Login'
 import {store_s_token_key} from '../const'
+import Analyse from "../components/analyse/Analyse";
+import Save from '../components/record/Save'
+import ForgetPass from "../components/forget/ForgetPass";
+import StepCheck from "../components/forget/StepCheck";
+import StepInput from "../components/forget/StepInput";
 
 Vue.use(Router)
 
@@ -20,6 +25,23 @@ const router = new Router({
       component: Login,
     },
     {
+      path: '/forget',
+      name: 'forgetPass',
+      component: ForgetPass,
+      children: [
+        {
+          path: '/forget/input',
+          name: 'forgetInput',
+          component: StepInput
+        },
+        {
+          path: '/forget/Check',
+          name: 'forgetCheck',
+          component: StepCheck
+        }
+      ]
+    },
+    {
       path: '/home',
       name: 'home',
       component: Home,
@@ -28,6 +50,16 @@ const router = new Router({
           path: '/rec/qry',
           name: 'qry',
           component: Qry
+        },
+        {
+          path: '/rec/save',
+          name: 'save',
+          component: Save
+        },
+        {
+          path: '/analyse',
+          name: 'analyse',
+          component: Analyse
         }
       ]
     }
@@ -36,7 +68,7 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/login') {
+  if (to.path === '/login' || to.path.startsWith('/forget')) {
     next();
   } else {
     let token = localStorage.getItem(store_s_token_key);

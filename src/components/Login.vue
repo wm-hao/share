@@ -1,54 +1,69 @@
 <template>
-  <div class="bg bigSize">
-    <div class="center size">
-      <el-form
-        :model="userForm"
-        status-icon
-        :rules="rules"
-        ref="userForm"
-        label-width="100px"
-        label-position="left"
-      >
-        <el-form-item label="用户名" prop="userName">
-                    <span slot="label">
-                        <span class="span-box">
-                            <i class="el-icon-user"></i>
-                            <span>用户</span>
-                        </span>
-                    </span>
-          <el-input
-            v-model="userForm.userName"
-            autocomplete="off"
-            placeholder="Please enter your email/phone"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="密码" prop="pass">
-                    <span slot="label">
-                        <span class="span-box">
-                            <i class="el-icon-lock"></i>
-                            <span>密码</span>
-                        </span>
-                    </span>
-          <el-input
-            type="password"
-            v-model="userForm.pass"
-            autocomplete="off"
-            placeholder="Please enter your password"
-          ></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-checkbox v-model="checked">&nbsp;Remember Me</el-checkbox>
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            type="primary"
-            @click="submitForm('userForm')"
-            class="login-button-box button"
-          >Login
-          </el-button>
-        </el-form-item>
-      </el-form>
-    </div>
+  <div class="both bg">
+    <el-row>
+      <el-col :span="18"></el-col>
+      <el-col :span="5">
+        <el-row style="min-height: 200px"></el-row>
+        <el-row>
+          <el-form
+            :model="userForm"
+            status-icon
+            :rules="rules"
+            ref="userForm"
+            label-position="left"
+            class="form"
+          >
+            <el-form-item style="text-align: center">
+              <span style="color:#ff7d0a;font-size: 16px">欢迎登录</span>
+            </el-form-item>
+            <el-form-item prop="userName">
+              <!-- <span slot="label">
+                   <span class="span-box">
+                       <i class="el-icon-user"></i>
+                       <span>用户</span>
+                   </span>
+               </span>-->
+              <el-input
+                v-model="userForm.userName"
+                autocomplete="off"
+                placeholder="请输入用户名"
+              ></el-input>
+            </el-form-item>
+            <el-form-item prop="pass">
+              <!-- <span slot="label">
+                   <span class="span-box">
+                       <i class="el-icon-lock"></i>
+                       <span>密码</span>
+                   </span>
+               </span>-->
+              <el-input
+                type="password"
+                v-model="userForm.pass"
+                autocomplete="off"
+                placeholder="请输入密码"
+              ></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox v-model="checked">&nbsp;记住密码</el-checkbox>
+              <el-button
+                type="primary"
+                @click="submitForm('userForm')"
+                class="login-button-box button"
+              >登录
+              </el-button>
+              <el-button
+                type="warning"
+                @click="forgetPass"
+                class="login-button-box button"
+              >忘记密码
+              </el-button>
+            </el-form-item>
+          </el-form>
+        </el-row>
+        <el-row></el-row>
+      </el-col>
+      <el-col :span="1"></el-col>
+    </el-row>
   </div>
 </template>
 
@@ -67,34 +82,14 @@
 
     export default {
         data() {
-            var validateUserName = (rule, value, callback) => {
+            let validateUserName = (rule, value, callback) => {
                 if (value === "") {
                     callback(new Error("请输入用户名"));
                 } else {
-                    /*let errMsg = "用户名已存在";
-                    let success = false;
-                    this.$http.get(userExists, {
-                        params: {
-                            userName: value
-                        }
-                    }).then(function (resp) {
-                        if (resp.data.code == successCode) {
-                            success = true;
-                        }
-                    }).catch(function (err) {
-                        errMsg = "用户名是否存在服务失败";
-                    });
-                    setTimeout(() => {
-                        if (success) {
-                            callback();
-                        } else {
-                            callback(new Error(errMsg));
-                        }
-                    }, 1000);*/
                     callback();
                 }
             };
-            var validatePass = (rule, value, callback) => {
+            let validatePass = (rule, value, callback) => {
                 if (value === "") {
                     callback(new Error("请输入密码"));
                 } else {
@@ -105,7 +100,7 @@
                 checked: false,
                 userForm: {
                     userName: "",
-                    pass: "",
+                    pass: ""
                 },
                 rules: {
                     userName: [{validator: validateUserName, trigger: "blur"}],
@@ -128,7 +123,7 @@
                             password: newPass
                         }).then(function (resp) {
                             if (resp.data.code === successCode) {
-                                self.$store.commit(store_f_changeLogin, resp.data.result);
+                                self.$store.commit(store_f_changeLogin, resp.data.message);
                                 if (self.checked) {
                                     self.$cookies.set(rememberPass, strTrue, '1d');
                                     self.$cookies.set(userInfo, self.userForm.userName);
@@ -140,23 +135,18 @@
                                 }
                                 self.$router.push({path: "/home"});
                             } else {
-                                self.$notify.error({
-                                    title: '错误',
-                                    message: '用户登录验证失败',
-                                    duration: 1500
-                                });
+                                self.$message.error({
+                                        message: '用户登录验证失败',
+                                        center: true,
+                                        type: 'error'
+                                    }
+                                );
                             }
                         }).catch(function (err) {
-                            self.$notify.error({
-                                title: '错误',
-                                message: err.message
-                            });
+                            self.$message.error(err.message);
                         });
                     } else {
-                        this.$notify.error({
-                            title: '错误',
-                            message: '输入信息有误'
-                        });
+                        this.$message.error('输入信息有误');
                         return false;
                     }
                 });
@@ -177,6 +167,9 @@
 
                 });
                 return false;
+            },
+            forgetPass() {
+                this.$router.push('/forget');
             }
         },
         created() {
@@ -186,6 +179,7 @@
                 this.userForm.userName = userName;
                 this.userForm.pass = this.$cookies.get(userName);
                 this.checked = true;
+                console.log('user=' + userName + ';pass=' + this.userForm.pass);
             }
         }
     };
@@ -198,7 +192,7 @@
   }
 
   .bg {
-    background: url("../assets/img/bg.jpg") no-repeat fixed;
+    background: url("../assets/img/bg4.jpg") no-repeat fixed;
     /* set background tensile */
     background-size: 100% 100%;
     -moz-background-size: 100% 100%;
@@ -231,15 +225,6 @@
     border: 1px solid #ff7d0a;
   }
 
-  .remember-box {
-    width: auto;
-    height: auto;
-    margin-left: 18px;
-    margin-top: 12px;
-    font-size: 12px;
-    color: #6a6765;
-  }
-
   .login-button-box {
     margin-top: 12px;
     width: 100%;
@@ -251,8 +236,8 @@
   .login-button-box button {
     background-color: #ff7d0a;
     color: #ffffff;
-    font-size: 16px;
-    width: 386px;
+    font-size: 14px;
+    /*width: 386px;*/
     height: 40px;
     margin-left: 18px;
     border: 1px solid #ff7d0a;
@@ -265,5 +250,15 @@
 
   .login-button-box button:active {
     background-color: #ee7204;
+  }
+
+  .el-col {
+    min-height: 200px;
+  }
+
+  .form {
+    margin: 20px;
+    padding: 20px;
+    background-color: white;
   }
 </style>
