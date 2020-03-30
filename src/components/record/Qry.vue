@@ -25,14 +25,14 @@
               value-format="yyyyMMdd">
             </el-date-picker>
           </el-form-item>
-          <el-form-item label="操作类型" prop="operationType">
-            <el-select v-model="qryParams.operationType" placeholder="请选择操作类型">
-              <el-option label="买入" value="buy"></el-option>
-              <el-option label="卖出" value="sell"></el-option>
+          <el-form-item label="状态" prop="operationType">
+            <el-select v-model="qryParams.profitState" placeholder="请选择状态">
+              <el-option label="盈利" value="Y"></el-option>
+              <el-option label="亏损" value="N"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="query">查询</el-button>
+            <el-button type="primary" @click="query" icon="el-icon-search">查询</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -45,7 +45,7 @@
     </el-row>
     <el-row>
       <el-table :data="tableData" style="width: 100%;"
-                :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                :header-cell-style="{background:'#eef1f6',color:'#606266',fontWeight:'normal'}">
         <el-table-column align="left" prop="name" label="股票名称" style="color: #606266"></el-table-column>
         <el-table-column align="left" prop="code" label="股票代码"></el-table-column>
         <el-table-column align="left" prop="buyPrice" label="买入价格" :formatter="li2yuan"></el-table-column>
@@ -88,21 +88,21 @@
                 total: 0,
                 currentPage: 1,
                 qryParams: {
-                    operationType: '',
+                    profitState: '',
                     endDate: '',
                     startDate: ''
                 },
-                operations: [
+                profitStates: [
                     {
-                        value: 'B',
-                        label: '买入'
+                        value: 'Y',
+                        label: '盈利'
                     }, {
-                        value: 'S',
-                        label: '卖出'
+                        value: 'N',
+                        label: '亏损'
                     }
                 ],
                 rules: {
-                    operationType: [{
+                    profitState: [{
                         // required: true, message: '请选择操作类型', trigger: 'blur'
                     }]
                 }
