@@ -9,6 +9,7 @@ import Save from '../components/record/Save'
 import ForgetPass from "../components/forget/ForgetPass";
 import StepCheck from "../components/forget/StepCheck";
 import StepInput from "../components/forget/StepInput";
+import Registry from "../components/Registry";
 
 Vue.use(Router)
 
@@ -18,6 +19,11 @@ const router = new Router({
     {
       path: '/',
       redirect: '/login'
+    },
+    {
+      path: '/registry',
+      name: 'registry',
+      component: Registry
     },
     {
       path: '/login',
@@ -68,7 +74,7 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/login' || to.path.startsWith('/forget')) {
+  if (to.path === '/login' || to.path.startsWith('/forget') || to.path === '/registry') {
     next();
   } else {
     let token = localStorage.getItem(store_s_token_key);

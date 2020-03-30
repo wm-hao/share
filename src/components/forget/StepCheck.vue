@@ -95,6 +95,9 @@
             },
             resetForm(formName) {
                 this.$refs[formName].resetFields();
+            },
+            goHome() {
+                this.$router.push('/login');
             }
         }
     }

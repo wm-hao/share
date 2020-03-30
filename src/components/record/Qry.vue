@@ -1,15 +1,13 @@
 <template>
   <div style="height: 100%">
     <el-row>
-      <el-col :span="2">
-        <div style="text-align: left;color: #606266;font-size: 16px;line-height:40px">查询条件</div>
+      <el-col :span="2" style="height: 47px">
+        <div style="text-align: left;color: #606266;font-size: 16px;line-height:30px">查询条件</div>
       </el-col>
-      <el-col :span="23"></el-col>
+      <el-col :span="22"></el-col>
     </el-row>
-    <el-row>
-      <el-col :span="2">
-      </el-col>
-      <el-col :span="23">
+    <el-row style="height: 47px">
+      <el-col style="margin-left: 5px" >
         <el-form :inline="true" :model="qryParams" :rules="rules" ref="qryForm">
           <el-form-item label="开始日期">
             <el-date-picker
@@ -43,10 +41,11 @@
       <el-col :span="2">
         <div style="text-align: left;color: #606266;font-size: 16px;line-height:40px">查询结果</div>
       </el-col>
-      <el-col :span="23"></el-col>
+      <el-col :span="22"></el-col>
     </el-row>
     <el-row>
-      <el-table :data="tableData" style="width: 100%;color:#606266">
+      <el-table :data="tableData" style="width: 100%;"
+                :header-cell-style="{background:'#eef1f6',color:'#606266'}">
         <el-table-column align="left" prop="name" label="股票名称" style="color: #606266"></el-table-column>
         <el-table-column align="left" prop="code" label="股票代码"></el-table-column>
         <el-table-column align="left" prop="buyPrice" label="买入价格" :formatter="li2yuan"></el-table-column>
@@ -171,10 +170,6 @@
 
   .el-pagination {
     margin-top: 10px;
-  }
-
-  .el-table cell {
-    color: #606266;
   }
 
 </style>

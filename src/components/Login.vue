@@ -17,12 +17,6 @@
               <span style="color:#ff7d0a;font-size: 16px">欢迎登录</span>
             </el-form-item>
             <el-form-item prop="userName">
-              <!-- <span slot="label">
-                   <span class="span-box">
-                       <i class="el-icon-user"></i>
-                       <span>用户</span>
-                   </span>
-               </span>-->
               <el-input
                 v-model="userForm.userName"
                 autocomplete="off"
@@ -30,12 +24,6 @@
               ></el-input>
             </el-form-item>
             <el-form-item prop="pass">
-              <!-- <span slot="label">
-                   <span class="span-box">
-                       <i class="el-icon-lock"></i>
-                       <span>密码</span>
-                   </span>
-               </span>-->
               <el-input
                 type="password"
                 v-model="userForm.pass"
@@ -44,7 +32,15 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-checkbox v-model="checked">&nbsp;记住密码</el-checkbox>
+              <el-row>
+                <el-col :span="10">
+                  <el-checkbox v-model="checked">&nbsp;记住密码</el-checkbox>
+                </el-col>
+                <el-col :span="4"></el-col>
+                <el-col :span="10">
+                  <el-link type="primary" @click="goRegistry">注册用户</el-link>
+                </el-col>
+              </el-row>
               <el-button
                 type="primary"
                 @click="submitForm('userForm')"
@@ -115,7 +111,8 @@
                         let self = this;
                         let newPass = util.MD5(this.userForm.pass).toString();
                         let remember = this.$cookies.get(rememberPass);
-                        if (remember === strTrue) {
+                        let curUserName = this.$cookies.get(userInfo);
+                        if (remember === strTrue && this.userForm.userName === curUserName) {
                             newPass = this.userForm.pass;
                         }
                         this.$http.post(userValidate, {
@@ -170,6 +167,9 @@
             },
             forgetPass() {
                 this.$router.push('/forget');
+            },
+            goRegistry() {
+                this.$router.push('/registry');
             }
         },
         created() {
@@ -189,15 +189,6 @@
   .size {
     height: 400px;
     width: 400px;
-  }
-
-  .bg {
-    background: url("../assets/img/bg4.jpg") no-repeat fixed;
-    /* set background tensile */
-    background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    margin: 0;
-    padding: 0;
   }
 
   .login-input-box {
@@ -253,7 +244,7 @@
   }
 
   .el-col {
-    min-height: 200px;
+    min-height: 20px;
   }
 
   .form {

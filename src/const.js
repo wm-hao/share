@@ -5,6 +5,7 @@ const shareListPage = "share/list/page"
 const shareSave = "share/insert";
 const err405 = "error405";
 
+const userInsert = "user/insert";
 const userValidate = "user/validate";
 const userExists = "user/exists";
 const userVerifyCode = "user/verifyCode";
@@ -37,6 +38,7 @@ export {
   pass,
   userInfo,
   strTrue,
+  userInsert,
   userValidate,
   userVerifyCode,
   userUpdatePass,

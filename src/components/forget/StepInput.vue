@@ -24,6 +24,9 @@
       <el-form-item style="padding-top: 25px">
         <el-button @click="nextStep" type="warning" style="width: 100%">下一步</el-button>
       </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="goHome" style="width: 100%">返回登录页面</el-button>
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -53,7 +56,7 @@
                         userName: value
                     }
                 }).then(function (resp) {
-                    if (resp.data.code == successCode) {
+                    if (resp.data.code === successCode) {
                         success = false;
                     }
                 }).catch(function (err) {
@@ -172,6 +175,9 @@
                 } else {
                     this.$message.error('验证码不正确');
                 }
+            },
+            goHome() {
+                this.$router.push('/login');
             }
         },
         created() {

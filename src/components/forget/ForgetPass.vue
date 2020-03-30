@@ -1,5 +1,5 @@
 <template>
-  <div class="both">
+  <div class="both bg">
     <el-row>
       <el-col :span="9">
       </el-col>
