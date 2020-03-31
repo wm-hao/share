@@ -1,48 +1,51 @@
 <template>
   <div class="both">
-    <el-row style="background: #545c64;min-height: 100px">
-      <el-col :span="4">
-      </el-col>
-      <el-col :span="19"></el-col>
-      <el-col :span="1">
-        <el-dropdown @command="handleCommand">
-          <el-avatar icon="el-icon-user-solid"></el-avatar>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="logout">退出</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </el-col>
-    </el-row>
-    <el-row class="height">
-      <el-col :span="4">
-        <el-aside width="100%">
-          <el-menu :default-active="this.$route.path" router
-                   background-color="#545c64"
-                   text-color="#fff"
-                   active-text-color="#ffd04b"
-                   style="border-right-color: #545c64;">
-            <el-submenu index="1">
-              <template slot="title">
-                <i class="el-icon-menu"></i>
-                <span>交易管理</span>
-              </template>
-              <el-menu-item index="/rec/qry"><span style="margin-left: 40px">记录查询</span></el-menu-item>
-              <el-menu-item index="/rec/save"><span style="margin-left: 40px">新增记录</span></el-menu-item>
-            </el-submenu>
-            <el-menu-item index="/analyse">
-              <i class="el-icon-menu"></i>
-              <span>数据分析</span></el-menu-item>
-          </el-menu>
-        </el-aside>
-      </el-col>
-      <el-col :span="20">
-        <el-main>
-          <div>
-            <router-view></router-view>
-          </div>
-        </el-main>
-      </el-col>
-    </el-row>
+    <div style="background: #545c64;height: 10%">
+      <el-row>
+        <el-col :span="4">
+        </el-col>
+        <el-col :span="19"></el-col>
+        <el-col :span="1">
+          <el-dropdown @command="handleCommand">
+            <el-avatar icon="el-icon-user-solid"></el-avatar>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="logout">退出</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </el-col>
+      </el-row>
+    </div>
+    <div class="height" style="background: red;height: 90%"></div>
+    <!--    <el-row >-->
+    <!--      <el-col :span="4">-->
+    <!--        <el-aside width="100%">-->
+    <!--          <el-menu :default-active="this.$route.path" router-->
+    <!--                   background-color="#545c64"-->
+    <!--                   text-color="#fff"-->
+    <!--                   active-text-color="#ffd04b"-->
+    <!--                   style="border-right-color: #545c64;">-->
+    <!--            <el-submenu index="1">-->
+    <!--              <template slot="title">-->
+    <!--                <i class="el-icon-menu"></i>-->
+    <!--                <span>交易管理</span>-->
+    <!--              </template>-->
+    <!--              <el-menu-item index="/rec/qry"><span style="margin-left: 40px">记录查询</span></el-menu-item>-->
+    <!--              <el-menu-item index="/rec/save"><span style="margin-left: 40px">新增记录</span></el-menu-item>-->
+    <!--            </el-submenu>-->
+    <!--            <el-menu-item index="/analyse">-->
+    <!--              <i class="el-icon-menu"></i>-->
+    <!--              <span>数据分析</span></el-menu-item>-->
+    <!--          </el-menu>-->
+    <!--        </el-aside>-->
+    <!--      </el-col>-->
+    <!--      <el-col :span="20">-->
+    <!--        <el-main>-->
+    <!--          <div>-->
+    <!--            <router-view></router-view>-->
+    <!--          </div>-->
+    <!--        </el-main>-->
+    <!--      </el-col>-->
+    <!--    </el-row>-->
   </div>
 </template>
 
@@ -77,13 +80,8 @@
     width: 100%;
   }
 
-  .el-header {
-    padding: 0;
-
-  }
-
   .el-dropdown {
-    margin-top: 30px;
+    margin-top: auto;
   }
 
   .el-col {
