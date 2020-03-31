@@ -1,10 +1,11 @@
 <template>
   <div class="both bg">
-    <el-row>
-      <el-col :span="18"></el-col>
-      <el-col :span="5">
-        <el-row style="min-height: 200px"></el-row>
-        <el-row>
+    <el-row class="both">
+      <el-col :span="18">
+
+      </el-col>
+      <el-col :span="6">
+        <div class="center" style="width: 80%">
           <el-form
             :model="userForm"
             status-icon
@@ -55,10 +56,8 @@
               </el-button>
             </el-form-item>
           </el-form>
-        </el-row>
-        <el-row></el-row>
+        </div>
       </el-col>
-      <el-col :span="1"></el-col>
     </el-row>
   </div>
 </template>
@@ -186,27 +185,6 @@
 </script>
 
 <style scoped>
-  .size {
-    height: 400px;
-    width: 400px;
-  }
-
-  .login-input-box {
-    margin-top: 12px;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    display: inline-block;
-  }
-
-  .login-input-box input {
-    width: 340px;
-    height: 32px;
-    margin-left: 18px;
-    border: 1px solid #dcdcdc;
-    border-radius: 4px;
-    padding-left: 42px;
-  }
 
   .login-input-box input:hover {
     border: 1px solid #ff7d0a;
@@ -228,7 +206,6 @@
     background-color: #ff7d0a;
     color: #ffffff;
     font-size: 14px;
-    /*width: 386px;*/
     height: 40px;
     margin-left: 18px;
     border: 1px solid #ff7d0a;
@@ -244,7 +221,7 @@
   }
 
   .el-col {
-    min-height: 20px;
+    height: 100%;
   }
 
   .form {
