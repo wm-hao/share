@@ -94,7 +94,7 @@ http.interceptors.response.use(
           // 其他错误，直接抛出错误提示
           default:
             Message({
-              message: error.response.data.message,
+              message: error.response.data.message || error.message,
               duration: 3000,
               forbidClick: true
             });

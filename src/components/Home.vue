@@ -55,7 +55,6 @@
                 this.$router.push('/login');
             },
             handleCommand: function (command) {
-                console.log("下拉菜单处理:" + command);
                 if (command === 'logout') {
                     this.logout();
                 }

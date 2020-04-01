@@ -3,6 +3,8 @@ const serverUrl = "http://localhost:11111/";
 const shareList = "share/list";
 const shareListPage = "share/list/page"
 const shareSave = "share/insert";
+const shareUpdate = "share/update";
+const shareDelete = "share/delete";
 const err405 = "error405";
 
 const userInsert = "user/insert";
@@ -28,6 +30,8 @@ export {
   serverUrl,
   shareList,
   shareSave,
+  shareUpdate,
+  shareDelete,
   store_s_token_key,
   store_f_changeLogin,
   store_s_step_key,
