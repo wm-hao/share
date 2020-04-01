@@ -44,14 +44,21 @@
         <el-table-column align="left" prop="name" label="股票名称" min-width="10%">
           <template slot-scope="scope">
             <el-input v-model="scope.row.name" v-if="scope.row.seen"
-                      @blur="loseFocus(scope.$index, scope.row)"></el-input>
+                      ></el-input>
             <span v-else>{{ scope.row.name }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="left" prop="alias" label="股票别名" min-width="10%">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.alias" v-if="scope.row.seen"
+                      ></el-input>
+            <span v-else>{{ scope.row.alias }}</span>
           </template>
         </el-table-column>
         <el-table-column align="left" prop="code" label="股票代码" min-width="10%">
           <template slot-scope="scope">
             <el-input v-model="scope.row.code" v-if="scope.row.seen"
-                      @blur="loseFocus(scope.$index, scope.row)"></el-input>
+                      ></el-input>
             <span v-else>{{ scope.row.code }}</span>
           </template>
         </el-table-column>
@@ -59,14 +66,14 @@
                          min-width="10%">
           <template slot-scope="scope">
             <el-input v-model="scope.row.buyPrice" v-if="scope.row.seen"
-                      @blur="loseFocus(scope.$index, scope.row)"></el-input>
+                      ></el-input>
             <span v-else>{{ scope.row.buyPrice }}</span>
           </template>
         </el-table-column>
         <el-table-column align="left" prop="buyCount" label="买入数量" min-width="10%">
           <template slot-scope="scope">
             <el-input v-model="scope.row.buyCount" v-if="scope.row.seen"
-                      @blur="loseFocus(scope.$index, scope.row)"></el-input>
+                      ></el-input>
             <span v-else>{{ scope.row.buyCount }}</span>
           </template>
         </el-table-column>
@@ -74,7 +81,7 @@
                          min-width="10%">
           <template slot-scope="scope">
             <el-input v-model="scope.row.sellPrice" v-if="scope.row.seen"
-                      @blur="loseFocus(scope.$index, scope.row)"></el-input>
+                      ></el-input>
             <span v-else>{{ scope.row.sellPrice }}</span>
           </template>
         </el-table-column>
@@ -82,11 +89,12 @@
           <template slot-scope="scope">
             <el-date-picker
               v-model="scope.row.buyTime"
-              type="date"
+              type="datetime"
               placeholder="选择日期"
-              value-format="yyyyMMdd"
+              format="yyyy-MM-dd HH:mm:ss"
+              value-format="yyyy-MM-dd HH:mm:ss"
               v-if="scope.row.seen"
-              @blur="loseFocus(scope.$index, scope.row)">
+              >
             </el-date-picker>
             <span v-else>{{ scope.row.buyTime }}</span>
           </template>
@@ -95,11 +103,12 @@
           <template slot-scope="scope">
             <el-date-picker
               v-model="scope.row.sellTime"
-              type="date"
+              type="datetime"
               placeholder="选择日期"
-              value-format="yyyyMMdd"
+              format="yyyy-MM-dd HH:mm:ss"
+              value-format="yyyy-MM-dd HH:mm:ss"
               v-if="scope.row.seen"
-              @blur="loseFocus(scope.$index, scope.row)">
+              >
             </el-date-picker>
             <span v-else>{{ scope.row.sellTime }}</span>
           </template>
@@ -149,13 +158,7 @@
     export default {
         data() {
             return {
-                tableData: [
-                    {
-                        name: '测试',
-                        code: '666',
-                        seen: false
-                    }
-                ],
+                tableData: [],
                 cacheTableData: [],
                 total: 0,
                 currentPage: 1,

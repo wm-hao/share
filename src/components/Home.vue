@@ -51,7 +51,11 @@
         name: "Home",
         methods: {
             logout: function () {
-                this.$store.commit(store_f_changeLogin, null);
+                this.$store.commit(store_f_changeLogin, {
+                    authToken: null,
+                    userId: null
+                });
+                localStorage.clear();
                 this.$router.push('/login');
             },
             handleCommand: function (command) {

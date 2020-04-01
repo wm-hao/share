@@ -119,7 +119,17 @@
                             password: newPass
                         }).then(function (resp) {
                             if (resp.data.code === successCode) {
-                                self.$store.commit(store_f_changeLogin, resp.data.message);
+                                let msg = resp.data.message;
+                                let index = msg.indexOf('-');
+                                let userId = msg.substr(0, index);
+                                let token = msg.substr(index + 1);
+                                // console.log(msg);
+                                // console.log(userId);
+                                // console.log(token);
+                                self.$store.commit(store_f_changeLogin, {
+                                    authToken: token,
+                                    userId: userId
+                                });
                                 if (self.checked) {
                                     self.$cookies.set(rememberPass, strTrue, '1d');
                                     self.$cookies.set(userInfo, self.userForm.userName);

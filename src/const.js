@@ -2,7 +2,7 @@ const serverUrl = "http://localhost:11111/";
 
 const shareList = "share/list";
 const shareListPage = "share/list/page"
-const shareSave = "share/insert";
+const shareInsert = "share/insert";
 const shareUpdate = "share/update";
 const shareDelete = "share/delete";
 const err405 = "error405";
@@ -13,10 +13,12 @@ const userExists = "user/exists";
 const userVerifyCode = "user/verifyCode";
 const userUpdatePass = "user/updatePass";
 
+const store_s_userId_key = "userId";
 const store_s_token_key = "token";
 const store_f_changeLogin = "changeLogin";
 const store_s_step_key = "step";
 const store_f_changeStep = "changeStep";
+
 const rememberPass = "rememberPass";
 const pass = "pass";
 const userInfo = "userInfo";
@@ -29,9 +31,10 @@ const private_key = "better than better";
 export {
   serverUrl,
   shareList,
-  shareSave,
+  shareInsert,
   shareUpdate,
   shareDelete,
+  store_s_userId_key,
   store_s_token_key,
   store_f_changeLogin,
   store_s_step_key,

@@ -20,7 +20,9 @@ const http = axios.create({
 http.interceptors.request.use(
   req => {
     if (localStorage.getItem(store_s_token_key)) {
-      req.headers.token = localStorage.getItem(store_s_token_key);
+      let token = localStorage.getItem(store_s_token_key);
+      console.log("请求中的token=" + token);
+      req.headers.token = token;
     }
     return req;
   },
@@ -93,10 +95,18 @@ http.interceptors.response.use(
             break;
           // 其他错误，直接抛出错误提示
           default:
+            let errMsg = error.message;
+            if (error.response.data) {
+              if (error.response.data.message) {
+                errMsg = error.response.data.message;
+              }
+            }
             Message({
-              message: error.response.data.message || error.message,
+              message: errMsg,
               duration: 3000,
-              forbidClick: true
+              forbidClick: true,
+              center: true,
+              type: 'error'
             });
         }
         return Promise.reject(error.response);
