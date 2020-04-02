@@ -10,6 +10,7 @@ import ForgetPass from "../components/forget/ForgetPass";
 import StepCheck from "../components/forget/StepCheck";
 import StepInput from "../components/forget/StepInput";
 import Registry from "../components/Registry";
+import Update from "../components/user/Update";
 
 Vue.use(Router)
 
@@ -66,7 +67,13 @@ const router = new Router({
           path: '/analyse',
           name: 'analyse',
           component: Analyse
+        },
+        {
+          path: '/user/update',
+          name: 'userUpdate',
+          component: Update
         }
+
       ]
     }
 

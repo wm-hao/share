@@ -12,6 +12,8 @@ const userValidate = "user/validate";
 const userExists = "user/exists";
 const userVerifyCode = "user/verifyCode";
 const userUpdatePass = "user/updatePass";
+const userQry = "user/qry";
+const userUpdate = "user/update";
 
 const store_s_userId_key = "userId";
 const store_s_token_key = "token";
@@ -49,6 +51,8 @@ export {
   userValidate,
   userVerifyCode,
   userUpdatePass,
+  userQry,
+  userUpdate,
   successCode,
   userExists,
   shareListPage,

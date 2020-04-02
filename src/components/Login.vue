@@ -35,7 +35,7 @@
             <el-form-item>
               <el-row>
                 <el-col :span="10">
-                  <el-checkbox v-model="checked">&nbsp;记住密码</el-checkbox>
+                  <el-checkbox v-model="checked" @change="changeRemember">&nbsp;记住密码</el-checkbox>
                 </el-col>
                 <el-col :span="4"></el-col>
                 <el-col :span="10">
@@ -110,8 +110,8 @@
                         let self = this;
                         let newPass = util.MD5(this.userForm.pass).toString();
                         let remember = this.$cookies.get(rememberPass);
-                        let curUserName = this.$cookies.get(userInfo);
-                        if (remember === strTrue && this.userForm.userName === curUserName) {
+                        let storePass = this.$cookies.get(this.userForm.userName);
+                        if (this.userForm.pass === storePass) {
                             newPass = this.userForm.pass;
                         }
                         this.$http.post(userValidate, {
@@ -123,9 +123,6 @@
                                 let index = msg.indexOf('-');
                                 let userId = msg.substr(0, index);
                                 let token = msg.substr(index + 1);
-                                // console.log(msg);
-                                // console.log(userId);
-                                // console.log(token);
                                 self.$store.commit(store_f_changeLogin, {
                                     authToken: token,
                                     userId: userId
@@ -179,6 +176,11 @@
             },
             goRegistry() {
                 this.$router.push('/registry');
+            },
+            changeRemember() {
+                this.$cookies.remove(rememberPass);
+                this.$cookies.remove(userInfo);
+                this.$cookies.remove(this.userForm.userName);
             }
         },
         created() {
@@ -231,6 +233,7 @@
   }
 
   .el-col {
+    min-height: 1px;
     height: 100%;
   }
 

@@ -9,6 +9,7 @@
               <el-avatar icon="el-icon-user-solid"></el-avatar>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="logout">退出</el-dropdown-item>
+                <el-dropdown-item command="update">修改</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
@@ -56,11 +57,18 @@
                     userId: null
                 });
                 localStorage.clear();
-                this.$router.push('/login');
+                this.$router.replace('/login');
+            },
+            update() {
+                console.log(this.$router.path);
+                this.$router.replace('/user/update')
             },
             handleCommand: function (command) {
                 if (command === 'logout') {
                     this.logout();
+                }
+                if (command === 'update') {
+                    this.update();
                 }
             }
         }
