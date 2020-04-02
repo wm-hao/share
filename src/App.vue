@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import {store_f_changeLogin, store_s_step_key, store_s_userId_key} from "./const";
+    import {store_f_changeLogin} from "./const";
 
     export default {
         name: "App",

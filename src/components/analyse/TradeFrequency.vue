@@ -1,54 +1,75 @@
 <template>
-  <div class="both" ref="chart">
+  <div class="both">
+    <v-chart :options="polar" :autoresize="true"/>
   </div>
+
 </template>
 
-<script>
-    import * as am4core from "@amcharts/amcharts4/core";
-    import * as am4charts from "@amcharts/amcharts4/charts";
-    import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+<style>
+  /**
+   * 默认尺寸为 600px×400px，如果想让图表响应尺寸变化，可以像下面这样
+   * 把尺寸设为百分比值（同时请记得为容器设置尺寸）。
+   */
+  /*.echarts {
+    width: 100%;
+    height: 100%;
+  }*/
+</style>
 
-    am4core.useTheme(am4themes_animated);
+<script>
+    import ECharts from 'vue-echarts'
+    import 'echarts/lib/chart/line'
+    import 'echarts/lib/component/polar'
 
     export default {
-        name: "TradeFrequency",
-        mounted() {
-            let chart = am4core.create(this.$refs.chart, am4charts.XYChart);
+        components: {
+            'v-chart': ECharts
+        },
+        data() {
+            let data = []
 
-            chart.paddingRight = 20;
-
-            let data = [];
-            let visits = 10;
-            for (let i = 1; i < 366; i++) {
-                visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-                data.push({date: new Date(2018, 0, i), name: "name" + i, value: visits});
+            for (let i = 0; i <= 360; i++) {
+                let t = i / 180 * Math.PI
+                let r = Math.sin(2 * t) * Math.cos(2 * t)
+                data.push([r, i])
             }
 
-            chart.data = data;
-
-            let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-            dateAxis.renderer.grid.template.location = 0;
-
-            let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-            valueAxis.tooltip.disabled = true;
-            valueAxis.renderer.minWidth = 35;
-
-            let series = chart.series.push(new am4charts.LineSeries());
-            series.dataFields.dateX = "date";
-            series.dataFields.valueY = "value";
-
-            series.tooltipText = "{valueY.value}";
-            chart.cursor = new am4charts.XYCursor();
-
-            let scrollbarX = new am4charts.XYChartScrollbar();
-            scrollbarX.series.push(series);
-            chart.scrollbarX = scrollbarX;
-
-            this.chart = chart;
+            return {
+                polar: {
+                    title: {
+                        text: '极坐标双数值轴'
+                    },
+                    legend: {
+                        data: ['line']
+                    },
+                    polar: {
+                        center: ['50%', '54%']
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross'
+                        }
+                    },
+                    angleAxis: {
+                        type: 'value',
+                        startAngle: 0
+                    },
+                    radiusAxis: {
+                        min: 0
+                    },
+                    series: [
+                        {
+                            coordinateSystem: 'polar',
+                            name: 'line',
+                            type: 'line',
+                            showSymbol: false,
+                            data: data
+                        }
+                    ],
+                    animationDuration: 2000
+                }
+            }
         }
     }
 </script>
-
-<style scoped>
-
-</style>
