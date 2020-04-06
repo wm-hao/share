@@ -5,7 +5,9 @@ const shareListPage = "share/list/page"
 const shareInsert = "share/insert";
 const shareUpdate = "share/update";
 const shareDelete = "share/delete";
-const err405 = "error405";
+const shareFrequency = 'share/frequency';
+const shareTopCount = "share/top";
+const err999 = "error999";
 
 const userInsert = "user/insert";
 const userValidate = "user/validate";
@@ -36,12 +38,14 @@ export {
   shareInsert,
   shareUpdate,
   shareDelete,
+  shareFrequency,
+  shareTopCount,
   store_s_userId_key,
   store_s_token_key,
   store_f_changeLogin,
   store_s_step_key,
   store_f_changeStep,
-  err405,
+  err999,
   private_key,
   rememberPass,
   pass,

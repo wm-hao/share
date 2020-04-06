@@ -9,7 +9,8 @@ import http from "./http";
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/my.css'
 import VueCookies from 'vue-cookies'
-
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 Vue.use(VueCookies)
 Vue.use(ElementUI)
 Vue.prototype.$http = http

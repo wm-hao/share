@@ -63,7 +63,7 @@
               </el-form-item>
             </template>
           </el-table-column>
-          <el-table-column fixed="right" min-width="20%" align="left" label="操作">
+          <el-table-column fixed="right" width="250px" align="left" label="操作">
             <template slot-scope="scope">
               <el-button icon="el-icon-plus" size="medium " type="success"
                          @click="add(scope.$index, scope.row, 'myForm')">新增
@@ -76,11 +76,36 @@
         </el-table>
       </el-form>
     </el-row>
+    <div style="width: 50%;margin-top: 2%;margin-left: 1%">
+      <el-row>
+        <el-upload
+          ref="upload"
+          drag
+          :action="uploadUrl"
+          multiple
+          :file-list="files"
+          :on-success="uploadSuccess"
+          :on-error="uploadError"
+          :before-upload="beforeUpload"
+          :data="extParas"
+          :headers="headers"
+          style="width: 100%"
+        >
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">将文件拖到此处</div>
+          <!--          <el-button style="margin-top: 5px;" size="large" type="success" @click="uploadFile">点击上传到后台服务器</el-button>-->
+          <div class="el-upload__tip" slot="tip" style="color: red">{{tip}}</div>
+        </el-upload>
+      </el-row>
+    </div>
+    <div style="width: 50%;">
+      <el-row style=""></el-row>
+    </div>
   </div>
 </template>
 
 <script>
-    import {shareInsert, store_s_userId_key, successCode} from "../../const";
+    import {shareInsert, store_s_token_key, store_s_userId_key, successCode} from "../../const";
 
     export default {
         name: "Save",
@@ -115,8 +140,12 @@
                         ],
                         sellTime: []
                     }
-                }
-
+                },
+                files: [],
+                tip: '',
+                uploadUrl: 'http://localhost:11111/share/insertByFile',
+                extParas: {},
+                headers: {}
             }
         },
         methods: {
@@ -124,7 +153,6 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         let self = this;
-                        console.log(row);
                         let userId = localStorage.getItem(store_s_userId_key);
                         row.userId = Number.parseInt(userId);
                         this.$http.post(shareInsert, row).then(function (rsp) {
@@ -154,6 +182,51 @@
             },
             reset(index, row, formName) {
                 this.$refs[formName].resetFields();
+            },
+            beforeUpload(file) {
+                let fileName = file.name;
+                let fileSuffix = fileName.substr(fileName.lastIndexOf('.') + 1);
+                if (fileSuffix === 'xlsx' || fileSuffix === 'xls') {
+                    this.tip = '';
+                    return true;
+                } else {
+                    this.tip = '请上传xlsx或者xls格式的文件，其余暂不支持';
+                    return false;
+                }
+            },
+            uploadSuccess(response, file, fileList) {
+                if (response.code === successCode) {
+                    this.$message({
+                        message: response.message,
+                        center: true,
+                        type: 'success'
+                    });
+                } else {
+                    this.$message({
+                        message: response.message,
+                        center: true,
+                        type: 'error'
+                    });
+                    this.$refs.upload.clearFiles();
+                }
+            },
+            uploadError(err, file, fileList) {
+                this.$message({
+                    message: err.message,
+                    center: true,
+                    type: 'error'
+                });
+            },
+            uploadFile() {
+                this.$refs.upload.submit();
+            }
+        },
+        created() {
+            this.extParas = {
+                userId: localStorage.getItem(store_s_userId_key)
+            };
+            this.headers = {
+                token: localStorage.getItem(store_s_token_key)
             }
         }
     }

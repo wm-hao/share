@@ -60,10 +60,10 @@
         },
         methods: {
             submitForm(formName) {
+                let self = this;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        let self = this;
-                        let curUser = localStorage.getItem(userInfo);
+                        let curUser =  localStorage.getItem(userInfo);
                         let pass = util.MD5(self.userForm.pass).toString();
                         self.$http.post(userUpdatePass, {
                             userName: curUser,
@@ -78,7 +78,7 @@
                                 self.$store.commit(store_f_changeStep, null);
                                 let userName = self.$cookies.get(userInfo);
                                 if (userName === curUser) {
-                                    self.$cookies.set(userName, pass);
+                                    self.$cookies.set(userName, self.userForm.pass);
                                 }
                                 setTimeout(() => {
                                     self.$router.push('/login');

@@ -7,9 +7,6 @@
       <el-form-item label="新密码" prop="password">
         <el-input type="password" v-model="userForm.password" autocomplete="off"></el-input>
       </el-form-item>
-<!--      <el-form-item label="确认密码" prop="password2">-->
-<!--        <el-input type="password" v-model="userForm.password2" autocomplete="off"></el-input>-->
-<!--      </el-form-item>-->
       <el-form-item label="邮箱地址" prop="email">
         <el-input v-model="userForm.email" autocomplete="off"></el-input>
       </el-form-item>
@@ -63,7 +60,6 @@
                     id: '',
                     userName: '',
                     password: '',
-                    // password2: '',
                     email: '',
                     billId: '',
                     address: '',
@@ -92,9 +88,12 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         let self = this;
-                        let newPass = this.userForm.password;
-                        if (self.userForm.oldPass !== newPass) {
-                            self.userForm.password = util.MD5(self.userForm.password).toString();
+                        let pass = this.userForm.password;
+                        let changePass = false;
+                        if (self.userForm.oldPass !== pass) {
+                            changePass = true;
+                            self.userForm.beforePassword = pass;
+                            self.userForm.password = util.MD5(pass).toString();
                         }
                         self.$http.post(userUpdate, self.userForm).then(function (rsp) {
                             console.log(rsp);
@@ -103,7 +102,9 @@
                                     message: '恭喜您，更新用户信息成功，将在3秒后切换到登录界面',
                                     center: true
                                 });
-                                self.$cookies.set(self.userForm.userName, self.userForm.password);
+                                if (changePass) {
+                                    self.$cookies.set(self.userForm.userName, self.userForm.beforePassword);
+                                }
                                 setTimeout(() => {
                                     self.$router.push('/login');
                                 }, 3000);
@@ -129,7 +130,6 @@
             }).then(function (rsp) {
                 if (rsp.data.code === successCode) {
                     self.userForm = JSON.parse(rsp.data.message);
-                    // self.userForm.password2 = self.userForm.password;
                     self.userForm.oldPass = self.userForm.password;
                 } else {
                     self.$message({

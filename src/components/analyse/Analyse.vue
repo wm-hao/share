@@ -1,18 +1,21 @@
 <template>
-  <el-tabs v-model="activeName" @tab-click="handleClick">
-    <el-tab-pane label="交易频率" name="tradeFrequency"><TradeFrequency/></el-tab-pane>
-    <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+  <el-tabs v-model="activeName" @tab-click="handleClick" class="both">
+    <el-tab-pane label="交易频率" name="tradeFrequency">
+      <TradeFrequency/>
+    </el-tab-pane>
+    <el-tab-pane label="榜单数据" name="topCount"><TopCount/></el-tab-pane>
     <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
     <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
   </el-tabs>
 </template>
 
 <script>
-  import TradeFrequency from "./TradeFrequency";
+    import TradeFrequency from "./TradeFrequency";
+    import TopCount from "./TopCount";
 
     export default {
         name: "Analyse",
-        components: {TradeFrequency},
+        components: {TradeFrequency,TopCount},
         data() {
             return {
                 activeName: 'tradeFrequency'

@@ -153,7 +153,7 @@
 </template>
 
 <script>
-    import {shareDelete, shareListPage, shareUpdate, successCode} from "../../const";
+    import {shareDelete, shareListPage, shareUpdate, store_s_userId_key, successCode} from "../../const";
 
     export default {
         data() {
@@ -189,6 +189,10 @@
                     // 加入数据
                     let item = rows[index];
                     item.seen = false;
+                    item.buyPrice = item.buyPrice /1000.0;
+                    if (item.sellPrice) {
+                        item.sellPrice = item.sellPrice /1000.0;
+                    }
                     let cacheItem = JSON.parse(JSON.stringify(item));
                     this.cacheTableData.push(cacheItem);
                     this.tableData.push(item);
@@ -211,6 +215,7 @@
                 let qryParam = this.qryParams;
                 qryParam.pageNum = pageNum;
                 qryParam.pageSize = 10;
+                qryParam.userId = localStorage.getItem(store_s_userId_key);
                 this.$http
                     .post(shareListPage, qryParam)
                     .then(function (response) {
@@ -281,8 +286,15 @@
             },
             confirmEdit(row) {
                 row.seen = false;
+                let updateRow = JSON.parse(JSON.stringify(row));
+                if (updateRow.buyPrice) {
+                    updateRow.buyPrice = updateRow.buyPrice * 1000;
+                }
+                if (updateRow.sellPrice) {
+                    updateRow.sellPrice = updateRow.sellPrice * 1000;
+                }
                 let self = this;
-                this.$http.post(shareUpdate, row
+                this.$http.post(shareUpdate, updateRow
                 ).then(function (rsp) {
                     self.$message({
                         message: '更新成功',

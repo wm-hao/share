@@ -109,11 +109,10 @@
                     if (valid) {
                         let self = this;
                         let newPass = util.MD5(this.userForm.pass).toString();
-                        let remember = this.$cookies.get(rememberPass);
-                        let storePass = this.$cookies.get(this.userForm.userName);
-                        if (this.userForm.pass === storePass) {
-                            newPass = this.userForm.pass;
-                        }
+                        // let storePass = this.$cookies.get(this.userForm.userName);
+                        // if (this.userForm.pass === storePass) {
+                        //     newPass = this.userForm.pass;
+                        // }
                         this.$http.post(userValidate, {
                             userName: self.userForm.userName,
                             password: newPass
@@ -130,7 +129,7 @@
                                 if (self.checked) {
                                     self.$cookies.set(rememberPass, strTrue, '1d');
                                     self.$cookies.set(userInfo, self.userForm.userName);
-                                    self.$cookies.set(self.userForm.userName, newPass);
+                                    self.$cookies.set(self.userForm.userName, self.userForm.pass);
                                 } else {
                                     self.$cookies.remove(rememberPass);
                                     self.$cookies.remove(userInfo);
