@@ -135,7 +135,7 @@
                                     self.$cookies.remove(userInfo);
                                     self.$cookies.remove(self.userForm.userName);
                                 }
-                                self.$router.push({path: "/home"});
+                                self.$router.push({path: "/home/index"});
                             } else {
                                 self.$message.error({
                                         message: '用户登录验证失败',

@@ -24,6 +24,10 @@
                    text-color="#fff"
                    active-text-color="#ffd04b"
                    style="border-right-color: #545c64;">
+            <el-menu-item index="/home/index">
+              <i class="el-icon-menu"></i>
+              <span>每日日志</span>
+            </el-menu-item>
             <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-menu"></i>
@@ -35,6 +39,9 @@
             <el-menu-item index="/analyse">
               <i class="el-icon-menu"></i>
               <span>数据分析</span></el-menu-item>
+            <el-menu-item index="/guess">
+              <i class="el-icon-menu"></i>
+              <span>明日猜想</span></el-menu-item>
           </el-menu>
         </el-aside>
         <el-main>
@@ -82,7 +89,7 @@
   }
 
   span {
-    font-size: 16px;
+    font-size: 14px;
   }
 
 </style>

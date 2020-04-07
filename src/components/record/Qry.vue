@@ -3,7 +3,24 @@
     <el-row>
       <el-col>
         <el-form :inline="true" :model="qryParams" :rules="rules" ref="qryForm">
-          <el-form-item label="开始日期" size="medium">
+          <el-form-item label="股票名称" prop="name" size="small">
+            <el-input v-model="qryParams.name" placeholder="请输入名称"/>
+          </el-form-item>
+          <el-form-item label="股票缩写" prop="alias" size="small">
+            <el-input v-model="qryParams.alias" placeholder="请输入缩写"/>
+          </el-form-item>
+          <el-form-item label="股票编码" prop="code" size="small">
+            <el-input v-model="qryParams.code" placeholder="请输入编码"/>
+          </el-form-item>
+
+          <el-form-item label="盈利状态" prop="profit" size="small">
+            <el-select v-model="qryParams.profit" placeholder="请选择状态">
+              <el-option label="" value=""></el-option>
+              <el-option label="盈利" value="Y"></el-option>
+              <el-option label="亏损" value="N"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开始日期" size="small">
             <el-date-picker
               v-model="qryParams.startDate"
               type="date"
@@ -11,7 +28,7 @@
               value-format="yyyyMMdd">
             </el-date-picker>
           </el-form-item>
-          <el-form-item label="结束日期 " size="medium">
+          <el-form-item label="结束日期 " size="small">
             <el-date-picker
               v-model="qryParams.endDate"
               type="date"
@@ -19,13 +36,8 @@
               value-format="yyyyMMdd">
             </el-date-picker>
           </el-form-item>
-          <el-form-item label="状态" prop="profit" size="medium">
-            <el-select v-model="qryParams.profit" placeholder="请选择状态">
-              <el-option label="盈利" value="Y"></el-option>
-              <el-option label="亏损" value="N"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="状态" prop="asc" size="medium">
+
+          <el-form-item label="时间排序" prop="asc" size="small">
             <el-select v-model="qryParams.asc" placeholder="请选择按创建日期排序方式">
               <el-option label="由近到远" value="N"></el-option>
               <el-option label="由远到近" value="Y"></el-option>
@@ -43,37 +55,36 @@
       >
         <el-table-column align="left" prop="name" label="股票名称" min-width="10%">
           <template slot-scope="scope">
-            <el-input v-model="scope.row.name" v-if="scope.row.seen"
-                      ></el-input>
-            <span v-else>{{ scope.row.name }}</span>
+            <!-- <el-input v-model="scope.row.name" v-if="scope.row.seen"
+             ></el-input>-->
+            <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
         <el-table-column align="left" prop="alias" label="股票别名" min-width="10%">
           <template slot-scope="scope">
-            <el-input v-model="scope.row.alias" v-if="scope.row.seen"
-                      ></el-input>
-            <span v-else>{{ scope.row.alias }}</span>
+            <!-- <el-input v-model="scope.row.alias" v-if="scope.row.seen"
+             ></el-input>-->
+            <span>{{ scope.row.alias }}</span>
           </template>
         </el-table-column>
         <el-table-column align="left" prop="code" label="股票代码" min-width="10%">
           <template slot-scope="scope">
-            <el-input v-model="scope.row.code" v-if="scope.row.seen"
-                      ></el-input>
-            <span v-else>{{ scope.row.code }}</span>
+            <!--  <el-input v-model="scope.row.code" v-if="scope.row.seen"
+              ></el-input>-->
+            <span>{{ scope.row.code }}</span>
           </template>
         </el-table-column>
         <el-table-column align="left" prop="buyPrice" label="买入价格" :formatter="li2yuan"
                          min-width="10%">
           <template slot-scope="scope">
             <el-input v-model="scope.row.buyPrice" v-if="scope.row.seen"
-                      ></el-input>
+            ></el-input>
             <span v-else>{{ scope.row.buyPrice }}</span>
           </template>
         </el-table-column>
         <el-table-column align="left" prop="buyCount" label="买入数量" min-width="10%">
           <template slot-scope="scope">
-            <el-input v-model="scope.row.buyCount" v-if="scope.row.seen"
-                      ></el-input>
+            <el-input v-model.number="scope.row.buyCount" v-if="scope.row.seen"></el-input>
             <span v-else>{{ scope.row.buyCount }}</span>
           </template>
         </el-table-column>
@@ -81,8 +92,13 @@
                          min-width="10%">
           <template slot-scope="scope">
             <el-input v-model="scope.row.sellPrice" v-if="scope.row.seen"
-                      ></el-input>
+            ></el-input>
             <span v-else>{{ scope.row.sellPrice }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="left" prop="profit" label="盈利" min-width="10%">
+          <template slot-scope="scope">
+            <span>{{ scope.row.profit}}</span>
           </template>
         </el-table-column>
         <el-table-column align="left" prop="buyTime" label="买入时间" min-width="15%">
@@ -94,7 +110,7 @@
               format="yyyy-MM-dd HH:mm:ss"
               value-format="yyyy-MM-dd HH:mm:ss"
               v-if="scope.row.seen"
-              >
+            >
             </el-date-picker>
             <span v-else>{{ scope.row.buyTime }}</span>
           </template>
@@ -108,7 +124,7 @@
               format="yyyy-MM-dd HH:mm:ss"
               value-format="yyyy-MM-dd HH:mm:ss"
               v-if="scope.row.seen"
-              >
+            >
             </el-date-picker>
             <span v-else>{{ scope.row.sellTime }}</span>
           </template>
@@ -116,17 +132,17 @@
         <el-table-column fixed="right" min-width="20%"
                          align="left" label="操作">
           <template slot-scope="scope">
-            <el-button v-if="!scope.row.seen" icon="el-icon-edit" size="medium "
+            <el-button v-if="!scope.row.seen" icon="el-icon-edit" size="small "
                        @click="handleEdit(scope.$index, scope.row)">
               编辑
             </el-button>
-            <el-button v-if="!scope.row.seen" icon="el-icon-delete" size="medium " type="danger"
+            <el-button v-if="!scope.row.seen" icon="el-icon-delete" size="small " type="danger"
                        @click="handleDelete(scope.$index, scope.row)">删除
             </el-button>
-            <el-button v-if="scope.row.seen" type="success" size="medium"  icon="el-icon-circle-check"
+            <el-button v-if="scope.row.seen" type="success" size="small"  icon="el-icon-circle-check"
                        @click="confirmEdit(scope.row)">保存
             </el-button>
-            <el-button v-if="scope.row.seen" size="medium" icon="el-icon-refresh"  type="warning"
+            <el-button v-if="scope.row.seen" size="small" icon="el-icon-refresh"  type="warning"
                        @click="cancelEdit(scope.row)">取消
             </el-button>
           </template>
@@ -166,7 +182,10 @@
                     profit: '',
                     endDate: '',
                     startDate: '',
-                    asc: ''
+                    asc: '',
+                    code: '',
+                    name: '',
+                    alias: ''
                 },
                 profitStates: [
                     {
@@ -189,9 +208,13 @@
                     // 加入数据
                     let item = rows[index];
                     item.seen = false;
-                    item.buyPrice = item.buyPrice /1000.0;
-                    if (item.sellPrice) {
-                        item.sellPrice = item.sellPrice /1000.0;
+                    item.buyPrice = item.buyPrice / 1000.0;
+
+                    if (item.sellPrice === 0) {
+                        item.sellPrice = '';
+                    } else if (item.sellPrice > 0) {
+                        item.sellPrice = item.sellPrice / 1000.0;
+                        item.profit = (item.sellPrice - item.buyPrice).toFixed(2);
                     }
                     let cacheItem = JSON.parse(JSON.stringify(item));
                     this.cacheTableData.push(cacheItem);
@@ -287,6 +310,19 @@
             confirmEdit(row) {
                 row.seen = false;
                 let updateRow = JSON.parse(JSON.stringify(row));
+                let cacheRow = JSON.parse(JSON.stringify(row));
+                row.profit = '';
+                if (row.buyPrice === '' || row.buyPrice === 0) {
+                    updateRow.buyPrice = null;
+                }
+                if (row.sellPrice === '' || row.sellPrice === 0) {
+                    updateRow.sellPrice = null;
+                }
+                if (row.buyPrice && row.sellPrice) {
+                    if (row.buyPrice > 0 && row.sellPrice > 0) {
+                        row.profit = (row.sellPrice - row.buyPrice).toFixed(2);
+                    }
+                }
                 if (updateRow.buyPrice) {
                     updateRow.buyPrice = updateRow.buyPrice * 1000;
                 }
@@ -301,6 +337,8 @@
                         center: true,
                         type: 'success'
                     });
+                    let deleteRow = self.getRowInfo(self.cacheTableData, row.id);
+                    self.cacheTableData.splice(deleteRow.index, 1, row);
                 }).catch(function (err) {
                     self.$message.error(err.message);
                 });

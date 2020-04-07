@@ -4,18 +4,18 @@
       <TradeFrequency/>
     </el-tab-pane>
     <el-tab-pane label="榜单数据" name="topCount"><TopCount/></el-tab-pane>
-    <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
+    <el-tab-pane label="资金数据" name="assetsData"><Assets/></el-tab-pane>
     <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
   </el-tabs>
 </template>
-
 <script>
     import TradeFrequency from "./TradeFrequency";
     import TopCount from "./TopCount";
+    import Assets from "./Assets";
 
     export default {
         name: "Analyse",
-        components: {TradeFrequency,TopCount},
+        components: {Assets, TradeFrequency,TopCount},
         data() {
             return {
                 activeName: 'tradeFrequency'
