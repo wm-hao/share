@@ -40,7 +40,7 @@
                     self.createTop(rsp.data.rows[0], rsp.data.rows[1]);
                     self.createBottom(rsp.data.rows[2], rsp.data.rows[3]);
                     self.createCount(rsp.data.rows[4], rsp.data.rows[5]);
-                    self.createCompare(rsp.data.rows[6]);
+                    self.createCompare                                                                                                              (rsp.data.rows[6]);
                 } else {
                     self.$message.error(rsp.data.message);
                 }

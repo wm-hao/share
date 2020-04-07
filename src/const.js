@@ -7,7 +7,8 @@ const shareUpdate = "share/update";
 const shareDelete = "share/delete";
 const shareFrequency = 'share/frequency';
 const shareTopCount = "share/top";
-const err999 = "error999";
+const shareProfit = "share/profit";
+const shareProfitAll = "share/profitAll";
 
 const userInsert = "user/insert";
 const userValidate = "user/validate";
@@ -40,12 +41,13 @@ export {
   shareDelete,
   shareFrequency,
   shareTopCount,
+  shareProfit,
+  shareProfitAll,
   store_s_userId_key,
   store_s_token_key,
   store_f_changeLogin,
   store_s_step_key,
   store_f_changeStep,
-  err999,
   private_key,
   rememberPass,
   pass,
