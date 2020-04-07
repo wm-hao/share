@@ -2,17 +2,17 @@
   <div class="both">
     <el-row>
       <el-col>
-        <el-form :inline="true" :model="qryParams" :rules="rules" ref="qryForm">
+        <el-form :inline="true" :model="qryParams" ref="qryForm">
           <el-form-item label="股票名称" prop="name" size="small">
             <el-input v-model="qryParams.name" placeholder="请输入名称"/>
           </el-form-item>
           <el-form-item label="股票编码" prop="code" size="small">
             <el-input v-model="qryParams.code" placeholder="请输入编码"/>
           </el-form-item>
-          <el-form-item label="顺序" prop="profit" size="small">
+          <el-form-item label="排列顺序" prop="profit" size="small">
             <el-select v-model="qryParams.asc" placeholder="请选择顺序">
-              <el-option label="盈利" value="Y"></el-option>
-              <el-option label="亏损" value=""></el-option>
+              <el-option label="由盈到亏" value="Y"></el-option>
+              <el-option label="由亏到盈" value=""></el-option>
             </el-select>
           </el-form-item>
           <el-form-item size="medium">

@@ -17,7 +17,7 @@
                 let myChart = this.$echarts.init(document.getElementById('profitChart'));
                 myChart.setOption({
                         title: {
-                            text: '日交易次数'
+                            text: '个股盈亏'
                         },
 
                         tooltip: {
