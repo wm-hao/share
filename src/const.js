@@ -9,6 +9,7 @@ const shareFrequency = 'share/frequency';
 const shareTopCount = "share/top";
 const shareProfit = "share/profit";
 const shareProfitAll = "share/profitAll";
+const shareKeepDuration = "share/keep";
 
 const userInsert = "user/insert";
 const userValidate = "user/validate";
@@ -43,6 +44,7 @@ export {
   shareTopCount,
   shareProfit,
   shareProfitAll,
+  shareKeepDuration,
   store_s_userId_key,
   store_s_token_key,
   store_f_changeLogin,
