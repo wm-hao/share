@@ -6,8 +6,8 @@
     <el-tab-pane label="榜单数据" name="topCount">
       <TopCount/>
     </el-tab-pane>
-    <el-tab-pane label="资金数据" name="assetsData">
-      <Assets/>
+    <el-tab-pane label="持股时长" name="keepDuration">
+      <KeepDuration/>
     </el-tab-pane>
     <el-tab-pane label="个股盈利" name="shareProfit">
       <ShareProfit/>
@@ -17,12 +17,12 @@
 <script>
     import TradeFrequency from "./TradeFrequency";
     import TopCount from "./TopCount";
-    import Assets from "./Assets";
     import ShareProfit from "./ShareProfit";
+    import KeepDuration from "./KeepDuration";
 
     export default {
         name: "Analyse",
-        components: {Assets, TradeFrequency, TopCount, ShareProfit},
+        components: {KeepDuration, TradeFrequency, TopCount, ShareProfit},
         data() {
             return {
                 activeName: 'tradeFrequency'
