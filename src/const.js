@@ -11,6 +11,10 @@ const shareProfit = "share/profit";
 const shareProfitAll = "share/profitAll";
 const shareKeepDuration = "share/keep";
 
+const dailySelect = "daily/select";
+const dailyInsert = "daily/insert";
+const dailyUpdate = "daily/update";
+
 const userInsert = "user/insert";
 const userValidate = "user/validate";
 const userExists = "user/exists";
@@ -65,5 +69,8 @@ export {
   userExists,
   shareListPage,
   failCode,
-  verify_code
+  verify_code,
+  dailySelect,
+  dailyInsert,
+  dailyUpdate
 }

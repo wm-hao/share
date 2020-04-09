@@ -21,7 +21,6 @@ http.interceptors.request.use(
   req => {
     if (localStorage.getItem(store_s_token_key)) {
       let token = localStorage.getItem(store_s_token_key);
-      console.log("请求中的token=" + token);
       req.headers.token = token;
     }
     return req;

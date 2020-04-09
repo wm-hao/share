@@ -11,8 +11,8 @@ import StepCheck from "../components/forget/StepCheck";
 import StepInput from "../components/forget/StepInput";
 import Registry from "../components/Registry";
 import Update from "../components/user/Update";
-import Dailys from "../components/Dailys";
-import Guess from "../components/Guess";
+import Guess from "../components/guess/Guess";
+import Daily from "../components/daily/Daily";
 
 Vue.use(Router)
 
@@ -58,7 +58,7 @@ const router = new Router({
         {
           path: 'index',
           name: 'index',
-          component: Dailys
+          component: Daily
         },
         {
           path: '/rec/qry',
